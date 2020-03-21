@@ -1,0 +1,52 @@
+plugins {
+    id "java"
+    id "org.jetbrains.kotlin.jvm" version "1.3.61"
+    id "org.springframework.boot" version "2.2.5.RELEASE"
+    id "io.spring.dependency-management" version "1.0.9.RELEASE"
+}
+
+apply plugin: "kotlin"
+
+buildDir "../build"
+group = "dev.jonaz.backend"
+version = "0.0.1"
+java.sourceCompatibility = JavaVersion.VERSION_11
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+sourceSets {
+    main {
+        kotlin {
+            srcDir 'main/kotlin'
+        }
+        resources {
+            srcDir 'main/conf'
+        }
+    }
+}
+
+dependencies {
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+    implementation("org.springframework.boot:spring-boot-configuration-processor")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+    compile group: 'com.zaxxer', name: 'HikariCP', version: '3.2.0'
+
+    compile("org.postgresql:postgresql:42.2.2")
+
+    compile("org.jetbrains.exposed:exposed-core:0.22.1")
+    compile("org.jetbrains.exposed:exposed-dao:0.22.1")
+    compile("org.jetbrains.exposed:exposed-jdbc:0.22.1")
+}

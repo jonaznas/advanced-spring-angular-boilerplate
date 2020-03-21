@@ -1,0 +1,33 @@
+subprojects { p ->
+    p.buildscript {
+        repositories {
+            mavenLocal()
+            jcenter()
+            maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
+        }
+    }
+}
+
+task buildClient(dependsOn: ["client:buildFromNode"]) {
+    group "application"
+    doLast {
+        ant.move file: "${projectDir}/client/build",
+                todir: "${buildDir}/client"
+    }
+}
+
+task buildServer(dependsOn: ["cleanServer", "server:bootJar"]) {
+    group "application"
+}
+
+task cleanClient(type: Delete) {
+    delete "${buildDir}/client"
+}
+
+task cleanServer(type: Delete) {
+    delete "${buildDir}/server"
+}
+
+task bootRun() {
+    group "other"
+}

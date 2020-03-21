@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "database.host",
+      "type": "java.lang.String",
+      "description": "Description for database.host."
+    }
+  ]
+}
