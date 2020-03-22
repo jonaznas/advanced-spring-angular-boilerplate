@@ -42,7 +42,9 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    compile group: 'com.zaxxer', name: 'HikariCP', version: '3.2.0'
+    compile group: "com.zaxxer", name: "HikariCP", version: "3.2.0"
+    compile group: "org.reflections", name: "reflections", version: "0.9.12"
+    compile group: "com.corundumstudio.socketio", name: "netty-socketio", version: "1.7.12"
 
     compile("org.postgresql:postgresql:42.2.2")
 
