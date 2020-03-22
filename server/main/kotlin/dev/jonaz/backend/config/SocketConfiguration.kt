@@ -7,7 +7,7 @@ class SocketConfiguration {
     private val config = Configuration()
 
     private val host = System.getenv("socket.host") ?: "0.0.0.0"
-    private val port = System.getenv("socket.port") ?: 8081
+    private val port = System.getenv("socket.port") ?: 8443
 
     init {
         config.ackMode = AckMode.MANUAL

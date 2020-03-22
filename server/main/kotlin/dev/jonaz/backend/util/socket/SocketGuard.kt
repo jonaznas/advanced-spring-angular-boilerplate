@@ -12,10 +12,8 @@ enum class SocketGuard {
         override fun validateAuthority(sessionToken: String, client: SocketIOClient): Boolean = false
     },
 
-    USER() {
-        override fun validateAuthority(sessionToken: String, client: SocketIOClient): Boolean {
-            return SessionManager.validate(sessionToken, client)
-        }
+    USER {
+        override fun validateAuthority(sessionToken: String, client: SocketIOClient): Boolean = SessionManager.validate(sessionToken, client)
     };
 
     abstract fun validateAuthority(sessionToken: String, client: SocketIOClient): Boolean

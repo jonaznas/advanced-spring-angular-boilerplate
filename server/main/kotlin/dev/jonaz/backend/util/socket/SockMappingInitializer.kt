@@ -33,7 +33,7 @@ class SockMappingInitializer {
         val sessionToken = fullData["session"].toString()
         val parsedData = fullData["data"] ?: mapOf(null to null)
 
-        val access = method.getAnnotation(SockMapping::class.java).arg1.validateAuthority(sessionToken, client)
+        val access = method.getAnnotation(SockMapping::class.java).permission.validateAuthority(sessionToken, client)
 
         if (access) {
             method.invoke(instance, client, parsedData, ackSender, sessionToken)
