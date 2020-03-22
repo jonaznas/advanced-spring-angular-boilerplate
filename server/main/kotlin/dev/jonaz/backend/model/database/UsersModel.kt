@@ -1,4 +1,4 @@
-package dev.jonaz.backend.model
+package dev.jonaz.backend.model.database
 
 import org.jetbrains.exposed.sql.Table
 
