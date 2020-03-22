@@ -16,12 +16,11 @@ class SockMappingInitializer {
         val annotated = reflections.getMethodsAnnotatedWith(SockMapping::class.java)
 
         for (method in annotated) {
-            val instance = method.declaringClass.newInstance()
+            val instance = method.declaringClass.getDeclaredConstructor().newInstance()
             val path = method.getAnnotation(SockMapping::class.java).path
 
-            println(path)
-
-            server.addEventListener(path, Map::class.java) { client, data, ackRequest -> launchMapping(method, instance, client, data, ackRequest) }
+            server.addEventListener(path, Map::class.java)
+            { client, fullData, ackRequest -> launchMapping(method, instance, client, fullData, ackRequest) }
         }
     }
 
@@ -29,9 +28,18 @@ class SockMappingInitializer {
             method: Method,
             instance: Any,
             client: SocketIOClient,
-            data: Map<*, *>,
+            fullData: Map<*, *>,
             ackSender: AckRequest) = GlobalScope.launch {
-        method.invoke(instance, client, data, ackSender)
+        val sessionToken = fullData["session"].toString()
+        val parsedData = fullData["data"] ?: mapOf(null to null)
+
+        val access = method.getAnnotation(SockMapping::class.java).arg1.validateAuthority(sessionToken, client)
+
+        if (access) {
+            method.invoke(instance, client, parsedData, ackSender, sessionToken)
+        } else {
+            ackSender.sendAckData(mapOf("success" to false, "message" to "Access denied"))
+        }
     }
 
 }
