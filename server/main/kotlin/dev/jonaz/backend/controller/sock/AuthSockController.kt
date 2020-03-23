@@ -4,11 +4,12 @@ package dev.jonaz.backend.controller.sock
 
 import com.corundumstudio.socketio.AckRequest
 import com.corundumstudio.socketio.SocketIOClient
+import dev.jonaz.backend.component.auth.Register
 import dev.jonaz.backend.util.session.SessionManager
 import dev.jonaz.backend.util.socket.SockMapping
 import dev.jonaz.backend.util.socket.SocketGuard
 
-class UserSockController {
+class AuthSockController {
 
     @SockMapping("/auth/login", SocketGuard.ALLOW)
     fun authLogin(client: SocketIOClient, data: Map<*, *>, ackRequest: AckRequest, sessionToken: String) {
@@ -30,10 +31,11 @@ class UserSockController {
         ackRequest.sendAckData(mapOf("valid" to res))
     }
 
-    @SockMapping("/auth/test", SocketGuard.USER)
+    @SockMapping("/auth/register", SocketGuard.ALLOW)
     fun authTest(client: SocketIOClient, data: Map<*, *>, ackRequest: AckRequest, sessionToken: String) {
-        println("yos")
-        ackRequest.sendAckData(mapOf("valid" to "yep"))
+        val register = Register(client, data)
+        val result = register.validateCredentialsAndCreateAccount()
+        ackRequest.sendAckData(mapOf("success" to result.first, "message" to result.second))
     }
 
 }

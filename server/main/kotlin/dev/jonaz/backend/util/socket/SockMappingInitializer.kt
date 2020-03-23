@@ -2,6 +2,7 @@ package dev.jonaz.backend.util.socket
 
 import com.corundumstudio.socketio.AckRequest
 import com.corundumstudio.socketio.SocketIOClient
+import com.corundumstudio.socketio.listener.ExceptionListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.reflections.Reflections

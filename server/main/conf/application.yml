@@ -1,5 +1,8 @@
 logging:
   level.root: info
+  level.com.corundumstudio.socketio.JsonSupportWrapper: off
+  level.com.corundumstudio.socketio.handler.InPacketHandler: off
+  level.com.corundumstudio.socketio.listener.DefaultExceptionListener: off
 spring:
   main:
     banner-mode: off

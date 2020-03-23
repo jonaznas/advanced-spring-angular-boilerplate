@@ -33,8 +33,7 @@ sourceSets {
 }
 
 dependencies {
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf:1.5.2.RELEASE")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
