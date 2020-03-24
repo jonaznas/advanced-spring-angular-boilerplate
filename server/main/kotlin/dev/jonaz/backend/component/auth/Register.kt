@@ -1,6 +1,10 @@
 package dev.jonaz.backend.component.auth
 
 import com.corundumstudio.socketio.SocketIOClient
+import dev.jonaz.backend.model.database.UsersModel
+import dev.jonaz.backend.util.session.SessionManager
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.transactions.transaction
 
 class Register(private val client: SocketIOClient,
                private val data: Map<*, *>) {
@@ -20,7 +24,15 @@ class Register(private val client: SocketIOClient,
             isAccAlreadyExist.first -> return Pair(false, isAccAlreadyExist.second ?: "")
         }
 
-        return Pair(true, "not finished yet")
-    }
+        val userId = transaction {
+            UsersModel.insert {
+                it[UsersModel.username] = username
+                it[UsersModel.password] = password.sha256()
+            } get UsersModel.id
+        }
 
+        val sessionToken = SessionManager.create(userId, client)
+
+        return Pair(true, sessionToken)
+    }
 }
