@@ -7,13 +7,7 @@ import org.springframework.web.bind.annotation.RestController
 class UserRestController {
 
     @GetMapping("/")
-    fun index(): String {
-
-        /*transaction {
-            addLogger(StdOutSqlLogger)
-        }*/
-
-        return ("{\"test\": true}")
+    fun index(): Map<*, *> {
+        return mapOf("success" to false)
     }
-
 }
