@@ -18,8 +18,8 @@ class Login(private val client: SocketIOClient,
             UsersModel.select { UsersModel.username.eq(username) and UsersModel.password.eq(password.sha256()) }.toList()
         }
 
-        return when (1) {
-            user.size -> {
+        return when (user.size) {
+            1 -> {
                 val userId = user[0][UsersModel.id]
                 val sessionToken = SessionManager.create(userId, client)
                 Pair(true, sessionToken)
