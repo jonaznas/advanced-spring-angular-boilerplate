@@ -1,7 +1,6 @@
 package dev.jonaz.backend.config
 
 import com.zaxxer.hikari.HikariConfig
-import com.zaxxer.hikari.HikariDataSource
 import dev.jonaz.backend.util.exposed.DatabaseValidator
 
 class HikariConfiguration {

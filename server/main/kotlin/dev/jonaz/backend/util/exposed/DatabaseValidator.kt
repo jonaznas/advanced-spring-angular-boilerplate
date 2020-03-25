@@ -1,6 +1,5 @@
 package dev.jonaz.backend.util.exposed
 
-import org.jetbrains.exposed.sql.transactions.transaction
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import kotlin.system.exitProcess

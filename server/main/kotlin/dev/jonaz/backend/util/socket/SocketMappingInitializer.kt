@@ -8,16 +8,18 @@ import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner
 import java.lang.reflect.Method
 
-class SockMappingInitializer {
+class SocketMappingInitializer {
     private val server = SocketServer.get()
 
     init {
         val reflections = Reflections("dev.jonaz.backend.controller.sock", MethodAnnotationsScanner())
-        val annotated = reflections.getMethodsAnnotatedWith(SockMapping::class.java)
+        val annotated = reflections.getMethodsAnnotatedWith(SocketMapping::class.java)
 
         for (method in annotated) {
             val instance = method.declaringClass.getDeclaredConstructor().newInstance()
-            val path = method.getAnnotation(SockMapping::class.java).path
+            val path = method.getAnnotation(SocketMapping::class.java).path
+
+            println("define route")
 
             server.addEventListener(path, Map::class.java)
             { client, fullData, ackRequest -> launchMapping(method, instance, client, fullData, ackRequest) }
@@ -33,7 +35,7 @@ class SockMappingInitializer {
         val sessionToken = fullData["session"].toString()
         val parsedData = fullData["data"] ?: mapOf(null to null)
 
-        val access = method.getAnnotation(SockMapping::class.java).permission.validateAuthority(sessionToken, client)
+        val access = method.getAnnotation(SocketMapping::class.java).permission.validateAuthority(sessionToken, client)
 
         if (access) {
             method.invoke(instance, client, parsedData, ackSender, sessionToken)
