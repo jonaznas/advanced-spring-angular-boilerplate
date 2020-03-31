@@ -2,6 +2,7 @@ package dev.jonaz.backend.util.socket
 
 import com.corundumstudio.socketio.AckRequest
 import com.corundumstudio.socketio.SocketIOClient
+import dev.jonaz.backend.Application
 import dev.jonaz.backend.util.session.SessionManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -13,7 +14,7 @@ class SocketMappingInitializer {
     private val server = SocketServer.get()
 
     init {
-        val reflections = Reflections("dev.jonaz.backend.controller.sock", MethodAnnotationsScanner())
+        val reflections = Reflections(Application::class.java, MethodAnnotationsScanner())
         val annotated = reflections.getMethodsAnnotatedWith(SocketMapping::class.java)
 
         for (method in annotated) {
@@ -41,7 +42,7 @@ class SocketMappingInitializer {
         if (access) {
             method.invoke(instance, client, parsedData, ackSender, session)
         } else {
-            ackSender.sendAckData(mapOf("success" to false, "message" to "Access denied"))
+            ackSender.sendAckData(SocketServer.Resolve(false, "Access denied"))
         }
     }
 }
