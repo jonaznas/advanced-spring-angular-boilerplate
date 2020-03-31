@@ -10,7 +10,7 @@ class ValidateCredentials {
 
         when (username.length) {
             in 16..Int.MAX_VALUE -> return Pair(false, "Your username is too long")
-            in Int.MIN_VALUE..3 -> return Pair(false, "Your username is too short")
+            in Int.MIN_VALUE..3  -> return Pair(false, "Your username is too short")
         }
 
         return Pair(true, null)
@@ -23,7 +23,7 @@ class ValidateCredentials {
 
         when (password.length) {
             in 200..Int.MAX_VALUE -> return Pair(false, "Your password is too long")
-            in Int.MIN_VALUE..5 -> return Pair(false, "Your password is too short")
+            in Int.MIN_VALUE..5   -> return Pair(false, "Your password is too short")
         }
 
         return Pair(true, null)

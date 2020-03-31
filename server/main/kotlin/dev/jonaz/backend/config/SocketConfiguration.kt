@@ -6,8 +6,8 @@ import com.corundumstudio.socketio.Configuration
 class SocketConfiguration {
     private val config = Configuration()
 
-    private val host = System.getenv("socket.host") ?: "0.0.0.0"
-    private val port = System.getenv("socket.port") ?: 8443
+    private val host = System.getenv("socket_host") ?: "0.0.0.0"
+    private val port = System.getenv("socket_port") ?: 8443
 
     init {
         config.ackMode = AckMode.MANUAL

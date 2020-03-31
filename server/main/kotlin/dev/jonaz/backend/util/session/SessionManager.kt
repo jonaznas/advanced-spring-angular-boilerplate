@@ -2,17 +2,18 @@ package dev.jonaz.backend.util.session
 
 import com.corundumstudio.socketio.SocketIOClient
 import dev.jonaz.backend.util.socket.SocketServer
+import java.net.InetAddress
 import java.util.*
 import kotlin.streams.asSequence
 
 object SessionManager {
     private val server = SocketServer.get()
-    private var storage: MutableMap<String, Map<String, Any>> = mutableMapOf()
+    private var storage: MutableMap<String, SessionData> = mutableMapOf()
 
-    private fun deleteSessions(keys: Map<String, Map<String, Any>>) = keys.forEach { (t, _) -> storage.keys.remove(t) }
+    private fun deleteSessions(keys: Map<String, SessionData>) = keys.forEach { (t, _) -> storage.keys.remove(t) }
 
-    private fun getById(userid: Int): Map<String, Map<String, Any>> {
-        var keys = storage.filter { it.value["userid"] == userid }
+    private fun getById(userid: Int): Map<String, SessionData> {
+        var keys = storage.filter { it.value.user == userid }
         if (keys.keys.size > 1) {
             deleteSessions(keys)
             keys = mapOf()
@@ -28,9 +29,9 @@ object SessionManager {
                 .joinToString("")
     }
 
-    private fun exist(token: String): Boolean = storage.containsKey(token)
+    private fun exist(token: String?): Boolean = storage.containsKey(token)
 
-    fun get(token: String): Map<String, Any>? = storage[token]
+    fun get(token: String?): SessionData? = storage[token]
 
     fun create(userid: Int, client: SocketIOClient): String {
         val newToken = generateToken()
@@ -38,10 +39,7 @@ object SessionManager {
 
         deleteSessions(oldSessions)
 
-        storage[newToken] = mapOf(
-                "userid" to userid,
-                "remoteAddress" to client.handshakeData.address.address
-        )
+        storage[newToken] = SessionData(userid, newToken, client.handshakeData.address.address)
 
         kickAll(userid)
         client.joinRoom("user-$userid")
@@ -49,12 +47,11 @@ object SessionManager {
         return newToken
     }
 
-    fun validate(token: String, client: SocketIOClient): Boolean {
+    fun validate(token: String?, client: SocketIOClient): Boolean {
         return if (exist(token)) {
             val session = get(token)
-            val remoteAddress = session?.get("remoteAddress")
 
-            if (remoteAddress != client.handshakeData.address.address) return false
+            if (session?.remoteAddress != client.handshakeData.address.address) return false
 
             true
         } else false

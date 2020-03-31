@@ -17,4 +17,6 @@ object SocketServer {
     }
 
     fun get(): SocketIOServer = server
+
+    data class Resolve(val success: Boolean, val data: Any? = null)
 }

@@ -14,6 +14,7 @@ class ApplicationStartup : ApplicationListener<ApplicationReadyEvent> {
         DatabaseInitializer()
                 .connect()
         DatabaseModelInitializer()
+                .createSchema()
 
         SocketServer
                 .startAsync()

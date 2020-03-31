@@ -6,11 +6,11 @@ import dev.jonaz.backend.util.exposed.DatabaseValidator
 class HikariConfiguration {
     private val config = HikariConfig()
 
-    private val dbHost: String? = System.getenv("database.host")
-    private val dbPort: String? = System.getenv("database.port") ?: "5432"
-    private val dbName: String? = System.getenv("database.name")
-    private val dbUser: String? = System.getenv("database.user")
-    private val dbPass: String? = System.getenv("database.pass")
+    private val dbHost: String? = System.getenv("database_host")
+    private val dbPort: String? = System.getenv("database_port") ?: "5432"
+    private val dbName: String? = System.getenv("database_name")
+    private val dbUser: String? = System.getenv("database_user")
+    private val dbPass: String? = System.getenv("database_pass")
 
     init {
         DatabaseValidator().validateEnvironment()

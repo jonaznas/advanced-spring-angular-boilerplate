@@ -1,34 +1,35 @@
 package dev.jonaz.backend.component.auth
 
 import com.corundumstudio.socketio.SocketIOClient
-import dev.jonaz.backend.model.database.UsersModel
+import dev.jonaz.backend.model.database.UserModel
 import dev.jonaz.backend.util.session.SessionManager
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class Register(private val client: SocketIOClient,
-               private val data: Map<*, *>) {
+class Register(private val client: SocketIOClient) {
+
     private val validateCredentials = ValidateCredentials()
     private val validateAccount = ValidateAccount()
 
-    fun validateCredentialsAndCreateAccount(): Pair<Boolean, String> {
-        val username = data["username"].toString()
-        val password = data["password"].toString()
+    fun validateCredentialsAndCreateAccount(username: String?, password: String?): Pair<Boolean, String?> {
+        if (username.isNullOrEmpty()) return Pair(false, null)
+        if (password.isNullOrEmpty()) return Pair(false, null)
+
         val isUsernameValid = validateCredentials.validateUsername(username)
         val isPasswordValid = validateCredentials.validatePassword(password)
         val isAccAlreadyExist = validateAccount.isExist(username)
 
         when (false) {
-            isUsernameValid.first -> return Pair(false, isUsernameValid.second ?: "")
-            isPasswordValid.first -> return Pair(false, isPasswordValid.second ?: "")
-            isAccAlreadyExist.first -> return Pair(false, isAccAlreadyExist.second ?: "")
+            isUsernameValid.first   -> return Pair(false, isUsernameValid.second)
+            isPasswordValid.first   -> return Pair(false, isPasswordValid.second)
+            isAccAlreadyExist.first -> return Pair(false, isAccAlreadyExist.second)
         }
 
         val userId = transaction {
-            UsersModel.insert {
-                it[UsersModel.username] = username
-                it[UsersModel.password] = password.sha256()
-            } get UsersModel.id
+            UserModel.insert {
+                it[UserModel.username] = username
+                it[UserModel.password] = password.sha256()
+            } get UserModel.id
         }
 
         val sessionToken = SessionManager.create(userId, client)

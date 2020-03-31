@@ -42,7 +42,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     compile group: "com.zaxxer", name: "HikariCP", version: "3.2.0"
-    compile group: "org.reflections", name: "reflections", version: "0.9.12"
+    compile group: "org.reflections", name: "reflections", version: "0.9.9"
     compile group: "com.corundumstudio.socketio", name: "netty-socketio", version: "1.7.12"
 
     compile("org.postgresql:postgresql:42.2.2")
@@ -50,4 +50,5 @@ dependencies {
     compile("org.jetbrains.exposed:exposed-core:0.22.1")
     compile("org.jetbrains.exposed:exposed-dao:0.22.1")
     compile("org.jetbrains.exposed:exposed-jdbc:0.22.1")
+    compile("org.jetbrains.exposed:exposed-java-time:0.22.1")
 }
