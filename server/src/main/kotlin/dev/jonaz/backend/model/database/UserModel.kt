@@ -6,6 +6,7 @@ import java.time.LocalDateTime
 
 object UserModel : Table("users") {
     val id = integer("id").autoIncrement()
+
     val username = text("username")
     val password = text("password")
     val createdAt = datetime("createdAt").default(LocalDateTime.now())
