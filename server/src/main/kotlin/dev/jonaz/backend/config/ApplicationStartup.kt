@@ -20,5 +20,4 @@ class ApplicationStartup : ApplicationListener<ApplicationReadyEvent> {
                 .startAsync()
         SocketMappingInitializer()
     }
-
 }

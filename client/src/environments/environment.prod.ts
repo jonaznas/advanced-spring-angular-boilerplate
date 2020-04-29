@@ -1,6 +1,6 @@
 // Production enviroments
 
 export const environment = {
-  backend: '1.2.3.4',
+  backend: 'http://localhost:8443',
   production: true
 };
