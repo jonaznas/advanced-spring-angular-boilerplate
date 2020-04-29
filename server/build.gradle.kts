@@ -25,7 +25,7 @@ dependencies {
 
     implementation("com.zaxxer:HikariCP:3.2.0")
     implementation("org.postgresql:postgresql:42.2.2")
-    implementation("org.reflections:reflections:0.9.12")
+    implementation("org.reflections:reflections:0.9.9")
     implementation("com.corundumstudio.socketio:netty-socketio:1.7.12")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
