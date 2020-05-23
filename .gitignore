@@ -33,3 +33,6 @@ out/
 
 # Project exclude paths
 /client/node_modules/
+
+# Nuxt
+.nuxt
