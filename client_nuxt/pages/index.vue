@@ -1,29 +1,28 @@
 <template>
-  <div class="container">
-    <h3>Index page</h3>
-    <div class="row">
-      <div class="col-lg-3">
-        <label>
-          Username
-          <input type="text" v-model="username" class="form-control"/>
-        </label>
-      </div>
-      <div class="col-lg-3">
-        <label>
-          Password
-          <input type="password" v-model="password" class="form-control"/>
-        </label>
-      </div>
-      <div class="col-lg-2">
-        <button class="btn btn-primary" v-on:click="doLogin">Log in</button>
-      </div>
+    <div class="container">
+        <h3>Index page</h3>
+        <div class="row">
+            <div class="col-lg-3">
+                <label>
+                    Username
+                    <input type="text" v-model="username" class="form-control"/>
+                </label>
+            </div>
+            <div class="col-lg-3">
+                <label>
+                    Password
+                    <input type="password" v-model="password" class="form-control"/>
+                </label>
+            </div>
+            <div class="col-lg-2">
+                <button class="btn btn-primary" v-on:click="doLogin">Log in</button>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
   import * as socket from '~/plugins/socket.io'
-  import Logo        from '~/components/Logo.vue'
 
   export default {
     data:       () => ({

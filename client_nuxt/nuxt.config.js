@@ -25,6 +25,7 @@ export default {
     'bootstrap-vue/nuxt',
   ],
   plugins: [
-    '~/plugins/startup'
+    '~/plugins/startup',
+    '~/plugins/filters'
   ]
 }
