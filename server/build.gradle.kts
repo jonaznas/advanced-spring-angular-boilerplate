@@ -8,7 +8,6 @@ plugins {
 }
 
 group = "dev.jonaz.backend"
-version = "0.0.1"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 setBuildDir("../build")
@@ -43,3 +42,10 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "1.8"
     }
 }
+
+tasks.register<Copy>("copyDockerfile") {
+    from("$projectDir/Dockerfile")
+    into("$buildDir/libs")
+}
+
+tasks.replace("build").dependsOn("copyDockerfile")
