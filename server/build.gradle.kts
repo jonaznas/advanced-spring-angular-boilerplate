@@ -22,6 +22,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-devtools")
+    implementation("org.springframework.security:spring-security-core:5.3.2.RELEASE")
 
     implementation("com.zaxxer:HikariCP:3.2.0")
     implementation("org.postgresql:postgresql:42.2.2")

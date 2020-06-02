@@ -28,7 +28,7 @@ class Register(private val client: SocketIOClient) {
         val userId = transaction {
             UserModel.insert {
                 it[UserModel.username] = username
-                it[UserModel.password] = password.sha256()
+                it[UserModel.password] = password.bcrypt()
             } get UserModel.id
         }
 

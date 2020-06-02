@@ -6,18 +6,35 @@ import dev.jonaz.backend.util.session.SessionManager
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 class Login(private val client: SocketIOClient) {
+    private val validateCredentials = ValidateCredentials()
+    private val passwordEncoder = BCryptPasswordEncoder()
+
     fun validateCredentialsAndAddSession(username: String?, password: String?): Pair<Boolean, String> {
-        if (username.isNullOrBlank()) return Pair(false, "Invalid credentials")
-        if (password.isNullOrBlank()) return Pair(false, "Invalid credentials")
+        if (username.isNullOrBlank() ||
+            password.isNullOrBlank()
+        ) return Pair(false, "Invalid credentials")
+
+        val isUsernameValid = validateCredentials.validateUsername(username).first
+        val isPasswordValid = validateCredentials.validatePassword(password).first
+
+        if (!isUsernameValid ||
+            !isPasswordValid
+        ) return Pair(false, "Invalid credentials")
 
         val user = transaction {
-            UserModel.select { UserModel.username.eq(username) and UserModel.password.eq(password.sha256()) }.toList()
+            UserModel.select { UserModel.username.eq(username) }.toList()
         }
 
-        return when (user.size) {
-            1    -> {
+        val valid = when (user.size) {
+            1    -> passwordEncoder.matches(password, user[0][UserModel.password])
+            else -> false
+        }
+
+        return when (valid) {
+            true -> {
                 val userId = user[0][UserModel.id]
                 val sessionToken = SessionManager.create(userId, client)
                 Pair(true, sessionToken)
