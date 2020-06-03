@@ -3,7 +3,7 @@
 My fullstack development template, including SocketIO connection between the frontend and backend, memory
 user-session management and typesafe sql.
 
-#####Libraries/Frameworks used:
+####Libraries/Frameworks used:
 
 - Backend
     - [Spring](https://spring.io)
