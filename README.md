@@ -29,7 +29,7 @@ Java SDK (i used 11) |
 Gradle |
 Intellij IDEA |
 
-You just need to set up the environment variables for the database if you want to use postgressql.
+You just need to set up the environment variables for the database if you want to use postgresql.
 
 For mysql take a look at [this wiki](https://github.com/JetBrains/Exposed/wiki/DataBase-and-DataSource).
 
