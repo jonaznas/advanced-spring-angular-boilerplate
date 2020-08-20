@@ -1,3 +1,3 @@
-rootProject.name = "spring-spa-socketio-boilerplate"
+rootProject.name = "advanced-spring-angular-boilerplate"
 
 include("server", "client_angular", "client_nuxt")
