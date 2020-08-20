@@ -1,13 +1,11 @@
 package dev.jonaz.backend.component.auth
 
-import com.corundumstudio.socketio.SocketIOClient
-import dev.jonaz.backend.model.database.UserModel
-import dev.jonaz.backend.util.session.SessionManager
+import dev.jonaz.backend.model.DatabaseTable
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class Register(private val client: SocketIOClient) {
-
+class Register {
+    private val table = DatabaseTable.User
     private val validateCredentials = ValidateCredentials()
     private val validateAccount = ValidateAccount()
 
@@ -26,14 +24,12 @@ class Register(private val client: SocketIOClient) {
         }
 
         val userId = transaction {
-            UserModel.insert {
-                it[UserModel.username] = username
-                it[UserModel.password] = password.bcrypt()
-            } get UserModel.id
+            table.insert {
+                it[table.username] = username
+                it[table.password] = password.bcrypt()
+            } get table.id
         }
 
-        val sessionToken = SessionManager.create(userId, client)
-
-        return Pair(true, sessionToken)
+        return Pair(true, "xxx")
     }
 }

@@ -1,14 +1,15 @@
 package dev.jonaz.backend.component.auth
 
-import dev.jonaz.backend.model.database.UserModel
+import dev.jonaz.backend.model.DatabaseTable
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class ValidateAccount {
+    private val table = DatabaseTable.User
 
     fun isExist(username: String): Pair<Boolean, String?> {
         val user = transaction {
-            UserModel.select { UserModel.username.eq(username) }.toList()
+            table.select { table.username.eq(username) }.toList()
         }
 
         return when(0) {

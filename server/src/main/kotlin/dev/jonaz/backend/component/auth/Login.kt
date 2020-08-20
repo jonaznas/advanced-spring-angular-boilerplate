@@ -1,18 +1,16 @@
 package dev.jonaz.backend.component.auth
 
-import com.corundumstudio.socketio.SocketIOClient
-import dev.jonaz.backend.model.database.UserModel
-import dev.jonaz.backend.util.session.SessionManager
-import org.jetbrains.exposed.sql.and
+import dev.jonaz.backend.model.DatabaseTable
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
-class Login(private val client: SocketIOClient) {
+class Login {
+    private val table = DatabaseTable.User
     private val validateCredentials = ValidateCredentials()
     private val passwordEncoder = BCryptPasswordEncoder()
 
-    fun validateCredentialsAndAddSession(username: String?, password: String?): Pair<Boolean, String> {
+    fun validateCredentialsAndLogin(username: String?, password: String?): Pair<Boolean, String> {
         if (username.isNullOrBlank() ||
             password.isNullOrBlank()
         ) return Pair(false, "Invalid credentials")
@@ -25,18 +23,20 @@ class Login(private val client: SocketIOClient) {
         ) return Pair(false, "Invalid credentials")
 
         val user = transaction {
-            UserModel.select { UserModel.username.eq(username) }.toList()
+            table.select { table.username.eq(username) }.toList()
         }
 
         val valid = when (user.size) {
-            1    -> passwordEncoder.matches(password, user[0][UserModel.password])
+            1 -> passwordEncoder.matches(password, user[0][table.password])
             else -> false
         }
 
         return when (valid) {
             true -> {
-                val userId = user[0][UserModel.id]
-                val sessionToken = SessionManager.create(userId, client)
+                val userId = user[0][table.id]
+                val role = user[0][table.role]
+
+                val sessionToken = SessionManager.create(userId, role)
                 Pair(true, sessionToken)
             }
             else -> Pair(false, "Invalid credentials")
