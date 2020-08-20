@@ -1,7 +1,6 @@
 ### 🌿 Spring + Atmosphere boilerplate
 
-My fullstack development template, including SocketIO connection between the frontend and backend, memory
-user-session management and typesafe sql.
+My fullstack development template, including Spring security with databsae session management, Atmosphere connection between the frontend and backend and typesafe sql.
 
 #### Libraries/Frameworks used:
 
