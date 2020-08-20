@@ -1,4 +1,4 @@
-### 🌿 Spring + SPA + SocketIO boilerplate
+### 🌿 Spring + Atmosphere boilerplate
 
 My fullstack development template, including SocketIO connection between the frontend and backend, memory
 user-session management and typesafe sql.
@@ -10,8 +10,8 @@ user-session management and typesafe sql.
     - [Docker](https://www.docker.com)
     - [HikariCP](https://github.com/brettwooldridge/HikariCP)
     - [Jetbrains Exposed](https://github.com/JetBrains/Exposed)
-    - [Netty SocketIO](https://github.com/mrniko/netty-socketio)
-    - [Jackson](https://github.com/FasterXML/jackson)
+    - [Atmosphere](https://github.com/Atmosphere/)
+    - [Gson](https://github.com/google/gson)
 
 - Frontend
     - [Angular](https://angular.io)
@@ -77,7 +77,7 @@ If you don't have docker just run ``curl -L https://get.docker.com | bash`` as r
         backend:latest
     ```
 
-Now you successfully deployed the backend server. If you are not familiar with Docker, here are some useful comands. [https://docs.docker.com/engine/reference/commandline/service/](https://docs.docker.com/engine/reference/commandline/service/)
+Now you successfully deployed the backend server. If you are not familiar with Docker, here are some useful commands. [https://docs.docker.com/engine/reference/commandline/service/](https://docs.docker.com/engine/reference/commandline/service/)
 
 ---
 
