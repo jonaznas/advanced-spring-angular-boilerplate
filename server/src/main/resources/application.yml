@@ -3,6 +3,11 @@ logging:
   level.com.corundumstudio.socketio.JsonSupportWrapper: off
   level.com.corundumstudio.socketio.handler.InPacketHandler: off
   level.com.corundumstudio.socketio.listener.DefaultExceptionListener: off
+  level.org.atmosphere.cpr: off
+  level.org.atmosphere.annotation: error
+  level.org.atmosphere.interceptor.HeartbeatInterceptor: error
+  level.org.atmosphere.util.ForkJoinPool: error
+  level.org.atmosphere.websocket: error
 spring:
   main:
     banner-mode: off

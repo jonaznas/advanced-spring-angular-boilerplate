@@ -2,29 +2,29 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule }      from '@angular/core';
 
 import { AppComponent }     from './app.component';
-import { ViewsModule }      from './views/views.module';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule }     from '@angular/router';
 
-import { WebsocketService } from './services/websocket.service';
-
-import { HeaderComponent } from './shared/header.component';
+import { HeaderComponent }  from './shared/header.component';
+import { SecondComponent }  from "./views/second/second.component";
+import { FirstComponent }   from "./views/first/first.component";
+import { HttpClientModule } from "@angular/common/http";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    FirstComponent,
+    SecondComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
-    ViewsModule
+    HttpClientModule
   ],
-  providers: [
-    WebsocketService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,6 +1,9 @@
 // Development enviroments
 
 export const environment = {
-  backend: 'http://localhost:8443',
+  backend: {
+    rest: "http://localhost:8080",
+    service: "http://localhost:8081"
+  },
   production: false
 };

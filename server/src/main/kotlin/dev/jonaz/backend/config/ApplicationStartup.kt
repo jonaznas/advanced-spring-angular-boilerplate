@@ -1,23 +1,19 @@
 package dev.jonaz.backend.config
 
-import dev.jonaz.backend.model.DatabaseModelInitializer
+import dev.jonaz.backend.util.atmosphere.NettosphereServer
 import dev.jonaz.backend.util.exposed.DatabaseInitializer
-import dev.jonaz.backend.util.socket.SocketMappingInitializer
-import dev.jonaz.backend.util.socket.SocketServer
-import org.springframework.boot.context.event.ApplicationReadyEvent
-import org.springframework.context.ApplicationListener
+import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.InitializingBean
 import org.springframework.stereotype.Component
 
 @Component
-class ApplicationStartup : ApplicationListener<ApplicationReadyEvent> {
-    override fun onApplicationEvent(event: ApplicationReadyEvent) {
-        DatabaseInitializer()
-                .connect()
-        DatabaseModelInitializer()
-                .createSchema()
+class ApplicationStartup : InitializingBean {
+    private val logger = LoggerFactory.getLogger(this::class.java)
 
-        SocketServer
-                .startAsync()
-        SocketMappingInitializer()
+    override fun afterPropertiesSet() {
+        DatabaseInitializer().connect()
+
+        logger.info("Starting NettoSphere...")
+        NettosphereServer().start()
     }
 }

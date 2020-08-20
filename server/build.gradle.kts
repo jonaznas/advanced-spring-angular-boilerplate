@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.2.6.RELEASE"
+    id("org.springframework.boot") version "2.3.2.RELEASE"
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
     kotlin("jvm") version "1.3.71"
     kotlin("plugin.spring") version "1.3.71"
@@ -21,13 +21,16 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-devtools")
-    implementation("org.springframework.security:spring-security-core:5.3.2.RELEASE")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
+    implementation("org.atmosphere:atmosphere-runtime:2.6.1")
+    implementation("org.atmosphere:nettosphere:3.2.1")
+    implementation("javax.servlet:javax.servlet-api:4.0.1")
 
     implementation("com.zaxxer:HikariCP:3.2.0")
     implementation("org.postgresql:postgresql:42.2.2")
-    implementation("org.reflections:reflections:0.9.9")
-    implementation("com.corundumstudio.socketio:netty-socketio:1.7.12")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+    implementation("com.google.code.gson:gson:2.8.6")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
