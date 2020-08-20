@@ -4,7 +4,7 @@ import com.zaxxer.hikari.HikariConfig
 import dev.jonaz.backend.util.docker.SecretManager
 import dev.jonaz.backend.util.exposed.DatabaseValidator
 
-class HikariConfiguration {
+class HikariSourceConfig {
     private val secretManager = SecretManager()
     private val config = HikariConfig()
 
